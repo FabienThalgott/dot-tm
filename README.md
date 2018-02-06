@@ -10,10 +10,13 @@ Once ready, simply run dot-tm.py
 
 ### Prerequisites
 
-The solution requires 
+The solution requires: 
+
 	- Python 2.7
+	
 	- pydot 1.2.4
 		pip install pydot
+		
 	- graphviz 2.38 
 		https://www.graphviz.org/download/
 
