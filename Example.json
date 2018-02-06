@@ -1,0 +1,95 @@
+{
+  "name": "Threat model template",
+  "description": "Description about this TM",
+  "author": "Fabien Thalgott",
+  "dependencies": {
+    "python": "2.7.0",
+    "pydot": "1.2.4",
+    "graphviz": "2.38"
+  },
+  "Doomsday": {
+    "Data Leak": "Database is dumped on pastebin",
+    "System compromise": "Someone inserted a tainted USB drive which installed a trojan",
+    "Ransomware": "Wannacry spread through the internal network"
+  },
+  "nodes": {
+    "entities": {
+      "Browser": {
+        "label": "Browser"
+      }
+    },
+    "processes": {
+      "Webserver": {
+        "label": "Webserver",
+        "boundary": "Internet"
+      },
+      "API": {
+        "label": "API",
+        "boundary": "LAN"
+      }
+    },
+    "datastores": {
+      "mySQL": {
+        "label": "mySQL",
+        "boundary": "LAN"
+      }
+    },
+    "nestedboundaries": {
+      "Internet": "LAN"       
+    },
+    "edges": {
+      "edge1": {
+        "from": "Browser",
+        "to": "Webserver",
+        "stride": {
+          "_comment": "st1 = Spoofing Threat for From, st2 = Spoofing Threat for dataflow, st3 = Spoofing Threat for To, sm1 = Spoofing Mitigation for From, sm2 = Spoofing Mitigation for dataflow, sm3 = Spoofing Mitigation for To",
+          "st1": "Basic Auth - No bruteforce protection",
+          "st2": "",
+          "st3": "",
+          "sm1": "Credentials",
+          "sm2": "",
+          "sm3": "Server certificate",
+          "tt1": "",
+          "tt2": "",
+          "tt3": "",
+          "tm1": "",
+          "tm2": "TLS",
+          "tm3": "No edit possible, only read access",
+          "rt1": "No Logs",
+          "rt2": "",
+          "rt3": "",
+          "rm1": "",
+          "rm2": "",
+          "rm3": "Audit logs",
+          "it1": "",
+          "it2": "",
+          "it3": "Photo accessible with GUID",
+          "im1": "",
+          "im2": "",
+          "im3": "",
+          "dt1": "",
+          "dt2": "",
+          "dt3": "",
+          "dm1": "",
+          "dm2": "High availability link",
+          "dm3": "High availability server setup",
+          "et1": "",
+          "et2": "",
+          "et3": "",
+          "em1": "",
+          "em2": "",
+          "em3": "Separate admin UI"
+        }
+      },
+        "edge2": {
+          "from": "Webserver",
+          "to": "API"
+        },
+        "edge3": {
+          "from": "API",
+          "to": "mySQL"
+        }
+        }
+      }
+  }
+  
