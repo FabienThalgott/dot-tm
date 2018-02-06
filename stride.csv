@@ -1,7 +1,8 @@
-,Browser Threat,Browser Mitigation,Flow Threat,Flow Mitigation,Webserver Threat,Webserver Mitigation
-Spoofing,|[u'Basic Auth - No bruteforce protection', u'Credentials', u'', u'', u'', u'Server certificate']|
-Tampering,|[u'', u'', u'', u'TLS', u'', u'No edit possible, only read access']|
-Repudiation,|[u'No Logs', u'', u'', u'', u'', u'Audit logs']|
-Information Disclosure,|[u'', u'', u'', u'', u'Photo accessible with GUID', u'']|
-Denial of Service,|[u'', u'', u'', u'High availability link', u'', u'High availability server setup']|
-Elevation of privilege,|[u'', u'', u'', u'', u'', u'Separate admin UI']|
+sep=;
+;Browser Threat;Browser Mitigation;Flow Threat;Flow Mitigation;Webserver Threat;Webserver Mitigation
+Spoofing;Basic Auth - No bruteforce protection;Credentials;;;;Server certificate
+Tampering;;;;TLS;;No edit possible, only read access
+Repudiation;No Logs;;;;;Audit logs
+Information Disclosure;;;;;Photo accessible with GUID;
+Denial of Service;;;;High availability link;;High availability server setup
+Elevation of privilege;;;;;;Separate admin UI

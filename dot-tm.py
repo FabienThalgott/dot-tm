@@ -88,27 +88,28 @@ for key,value in edges.items():
             dosdict={}
             elevationdict={}
     if isstride:
-        stridetable[edgefrom+';'+edgeto]['spoofing']=[spoofingdict['st1'],spoofingdict['sm1'],spoofingdict['st2'],spoofingdict['sm2'],spoofingdict['st3'],spoofingdict['sm3']]
-        stridetable[edgefrom+';'+edgeto]['tampering']=[tamperingdict['tt1'],tamperingdict['tm1'],tamperingdict['tt2'],tamperingdict['tm2'],tamperingdict['tt3'],tamperingdict['tm3']]
-        stridetable[edgefrom+';'+edgeto]['repudiation']=[repudiationdict['rt1'],repudiationdict['rm1'],repudiationdict['rt2'],repudiationdict['rm2'],repudiationdict['rt3'],repudiationdict['rm3']]
-        stridetable[edgefrom+';'+edgeto]['info']=[infodict['it1'],infodict['im1'],infodict['it2'],infodict['im2'],infodict['it3'],infodict['im3']]
-        stridetable[edgefrom+';'+edgeto]['dos']=[dosdict['dt1'],dosdict['dm1'],dosdict['dt2'],dosdict['dm2'],dosdict['dt3'],dosdict['dm3']]
-        stridetable[edgefrom+';'+edgeto]['elevation']=[elevationdict['et1'],elevationdict['em1'],elevationdict['et2'],elevationdict['em2'],elevationdict['et3'],elevationdict['em3']]
+        stridetable[edgefrom+';'+edgeto]['spoofing']=['Spoofing',spoofingdict['st1'],spoofingdict['sm1'],spoofingdict['st2'],spoofingdict['sm2'],spoofingdict['st3'],spoofingdict['sm3']]
+        stridetable[edgefrom+';'+edgeto]['tampering']=['Tampering',tamperingdict['tt1'],tamperingdict['tm1'],tamperingdict['tt2'],tamperingdict['tm2'],tamperingdict['tt3'],tamperingdict['tm3']]
+        stridetable[edgefrom+';'+edgeto]['repudiation']=['Repudiation',repudiationdict['rt1'],repudiationdict['rm1'],repudiationdict['rt2'],repudiationdict['rm2'],repudiationdict['rt3'],repudiationdict['rm3']]
+        stridetable[edgefrom+';'+edgeto]['info']=['Information Disclosure',infodict['it1'],infodict['im1'],infodict['it2'],infodict['im2'],infodict['it3'],infodict['im3']]
+        stridetable[edgefrom+';'+edgeto]['dos']=['Denial of Service',dosdict['dt1'],dosdict['dm1'],dosdict['dt2'],dosdict['dm2'],dosdict['dt3'],dosdict['dm3']]
+        stridetable[edgefrom+';'+edgeto]['elevation']=['Elevation of privilege',elevationdict['et1'],elevationdict['em1'],elevationdict['et2'],elevationdict['em2'],elevationdict['et3'],elevationdict['em3']]
     graph.add_edge(pydot.Edge(edgefrom, edgeto))
    
 
 # Export STRIDE to csv table
 with open('stride.csv', 'wb') as csvfile:
-    writer = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+    writer = csv.writer(csvfile, delimiter=';',quotechar='',escapechar='\\', quoting=csv.QUOTE_NONE)
+    writer.writerow(['sep=','']) #Forces excel to bypass system delimiter and use the provided one instead
     for key, value in stridetable.iteritems():
         edgefrom, edgeto = key.split(';')
         writer.writerow(['',edgefrom+' Threat',edgefrom+' Mitigation','Flow Threat','Flow Mitigation',edgeto+' Threat',edgeto+' Mitigation'])
-        writer.writerow(['Spoofing',value['spoofing']])
-        writer.writerow(['Tampering',value['tampering']])
-        writer.writerow(['Repudiation',value['repudiation']])
-        writer.writerow(['Information Disclosure',value['info']])
-        writer.writerow(['Denial of Service',value['dos']])
-        writer.writerow(['Elevation of privilege',value['elevation']])
+        writer.writerow(value['spoofing'])
+        writer.writerow(value['tampering'])
+        writer.writerow(value['repudiation'])
+        writer.writerow(value['info'])
+        writer.writerow(value['dos'])
+        writer.writerow(value['elevation'])
 
 
 
