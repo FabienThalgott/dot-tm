@@ -81,10 +81,49 @@
           "em3": "Separate admin UI"
         }
       },
-        "edge2": {
-          "from": "Webserver",
-          "to": "API"
-        },
+      "edge2": {
+        "from": "Webserver",
+        "to": "API",
+        "stride": {
+          "_comment": "st1 = Spoofing Threat for From, st2 = Spoofing Threat for dataflow, st3 = Spoofing Threat for To, sm1 = Spoofing Mitigation for From, sm2 = Spoofing Mitigation for dataflow, sm3 = Spoofing Mitigation for To",
+          "st1": "",
+          "st2": "",
+          "st3": "",
+          "sm1": "oAuth Token",
+          "sm2": "",
+          "sm3": "Server certificate",
+          "tt1": "",
+          "tt2": "",
+          "tt3": "Direct call to IDs, no RBAC",
+          "tm1": "",
+          "tm2": "TLS",
+          "tm3": "",
+          "rt1": "",
+          "rt2": "",
+          "rt3": "",
+          "rm1": "Audit Logs",
+          "rm2": "",
+          "rm3": "Audit logs",
+          "it1": "",
+          "it2": "",
+          "it3": "",
+          "im1": "",
+          "im2": "",
+          "im3": "",
+          "dt1": "",
+          "dt2": "",
+          "dt3": "",
+          "dm1": "",
+          "dm2": "High availability link",
+          "dm3": "High availability server setup",
+          "et1": "",
+          "et2": "",
+          "et3": "",
+          "em1": "",
+          "em2": "",
+          "em3": "Separate admin UI"
+        }
+      },
         "edge3": {
           "from": "API",
           "to": "mySQL"

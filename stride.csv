@@ -1,4 +1,12 @@
 sep=;
+;Webserver Threat;Webserver Mitigation;Flow Threat;Flow Mitigation;API Threat;API Mitigation
+Spoofing;;oAuth Token;;;;Server certificate
+Tampering;;;;TLS;Direct call to IDs, no RBAC;
+Repudiation;;Audit Logs;;;;Audit logs
+Information Disclosure;;;;;;
+Denial of Service;;;;High availability link;;High availability server setup
+Elevation of privilege;;;;;;Separate admin UI
+
 ;Browser Threat;Browser Mitigation;Flow Threat;Flow Mitigation;Webserver Threat;Webserver Mitigation
 Spoofing;Basic Auth - No bruteforce protection;Credentials;;;;Server certificate
 Tampering;;;;TLS;;No edit possible, only read access
@@ -6,3 +14,4 @@ Repudiation;No Logs;;;;;Audit logs
 Information Disclosure;;;;;Photo accessible with GUID;
 Denial of Service;;;;High availability link;;High availability server setup
 Elevation of privilege;;;;;;Separate admin UI
+

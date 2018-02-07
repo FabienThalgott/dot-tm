@@ -60,40 +60,30 @@ for key,value in datastore.items():
 for key,value in edges.items():
     edgefrom =""
     edgeto = ""
-    isstride = False
-    spoofingdict = {'row' :'Spoofing'}
-    tamperingdict = {'row' :'Tampering'}
-    repudiationdict= {'row' :'Repudiation'}
-    infodict = {'row' :'Information Disclosure'}
-    dosdict={'row' :'Denial of Service'}
-    elevationdict={'row' :'Elevation of privilege'}
+    spoofingdict = {}
+    tamperingdict = {}
+    repudiationdict= {}
+    infodict = {}
+    dosdict={}
+    elevationdict={}
     for k,v in value.items():
         if k in "from":
             edgefrom = v
         if k in "to":
             edgeto = v
         if k in 'stride':
-            isstride=True
             spoofingdict = {key:v[key] for key in ['st1', 'sm1', 'st2', 'sm2', 'st3', 'sm3']}
             tamperingdict = {key:v[key] for key in ['tt1', 'tm1', 'tt2', 'tm2','tt3', 'tm3']}
             repudiationdict = {key:v[key] for key in ['rt1', 'rm1', 'rt2', 'rm2','rt3', 'rm3']}
             infodict = {key:v[key] for key in ['it1', 'im1', 'im2', 'it2', 'im3', 'it3']}
             dosdict = {key:v[key] for key in ['dt1', 'dm1', 'dt2', 'dm2','dt3', 'dm3']}
             elevationdict = {key:v[key] for key in ['et1', 'em1','et2', 'em2','et3', 'em3']}
-        else:
-            spoofingdict = {}
-            tamperingdict ={}
-            repudiationdict= {}
-            infodict = {}
-            dosdict={}
-            elevationdict={}
-    if isstride:
-        stridetable[edgefrom+';'+edgeto]['spoofing']=['Spoofing',spoofingdict['st1'],spoofingdict['sm1'],spoofingdict['st2'],spoofingdict['sm2'],spoofingdict['st3'],spoofingdict['sm3']]
-        stridetable[edgefrom+';'+edgeto]['tampering']=['Tampering',tamperingdict['tt1'],tamperingdict['tm1'],tamperingdict['tt2'],tamperingdict['tm2'],tamperingdict['tt3'],tamperingdict['tm3']]
-        stridetable[edgefrom+';'+edgeto]['repudiation']=['Repudiation',repudiationdict['rt1'],repudiationdict['rm1'],repudiationdict['rt2'],repudiationdict['rm2'],repudiationdict['rt3'],repudiationdict['rm3']]
-        stridetable[edgefrom+';'+edgeto]['info']=['Information Disclosure',infodict['it1'],infodict['im1'],infodict['it2'],infodict['im2'],infodict['it3'],infodict['im3']]
-        stridetable[edgefrom+';'+edgeto]['dos']=['Denial of Service',dosdict['dt1'],dosdict['dm1'],dosdict['dt2'],dosdict['dm2'],dosdict['dt3'],dosdict['dm3']]
-        stridetable[edgefrom+';'+edgeto]['elevation']=['Elevation of privilege',elevationdict['et1'],elevationdict['em1'],elevationdict['et2'],elevationdict['em2'],elevationdict['et3'],elevationdict['em3']]
+            stridetable[edgefrom+';'+edgeto]['spoofing']=['Spoofing',spoofingdict['st1'],spoofingdict['sm1'],spoofingdict['st2'],spoofingdict['sm2'],spoofingdict['st3'],spoofingdict['sm3']]
+            stridetable[edgefrom+';'+edgeto]['tampering']=['Tampering',tamperingdict['tt1'],tamperingdict['tm1'],tamperingdict['tt2'],tamperingdict['tm2'],tamperingdict['tt3'],tamperingdict['tm3']]
+            stridetable[edgefrom+';'+edgeto]['repudiation']=['Repudiation',repudiationdict['rt1'],repudiationdict['rm1'],repudiationdict['rt2'],repudiationdict['rm2'],repudiationdict['rt3'],repudiationdict['rm3']]
+            stridetable[edgefrom+';'+edgeto]['info']=['Information Disclosure',infodict['it1'],infodict['im1'],infodict['it2'],infodict['im2'],infodict['it3'],infodict['im3']]
+            stridetable[edgefrom+';'+edgeto]['dos']=['Denial of Service',dosdict['dt1'],dosdict['dm1'],dosdict['dt2'],dosdict['dm2'],dosdict['dt3'],dosdict['dm3']]
+            stridetable[edgefrom+';'+edgeto]['elevation']=['Elevation of privilege',elevationdict['et1'],elevationdict['em1'],elevationdict['et2'],elevationdict['em2'],elevationdict['et3'],elevationdict['em3']]
     graph.add_edge(pydot.Edge(edgefrom, edgeto))
    
 
@@ -110,6 +100,8 @@ with open('stride.csv', 'wb') as csvfile:
         writer.writerow(value['info'])
         writer.writerow(value['dos'])
         writer.writerow(value['elevation'])
+        writer.writerow('')
+        
 
 
 
