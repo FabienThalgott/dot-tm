@@ -7,7 +7,7 @@ Information Disclosure;;;;;;
 Denial of Service;;;;High availability link;;High availability server setup
 Elevation of privilege;;;;;;Separate admin UI
 
-;Browser Threat;Browser Mitigation;Flow Threat;Flow Mitigation;Webserver Threat;Webserver Mitigation
+; Threat; Mitigation;Flow Threat;Flow Mitigation;Webserver Threat;Webserver Mitigation
 Spoofing;Basic Auth - No bruteforce protection;Credentials;;;;Server certificate
 Tampering;;;;TLS;;No edit possible, only read access
 Repudiation;No Logs;;;;;Audit logs

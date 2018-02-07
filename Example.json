@@ -20,29 +20,27 @@
     },
     "processes": {
       "Webserver": {
-        "label": "Webserver",
-        "boundary": "Internet"
-      },
+        "label": "Webserver"
+       },
       "API": {
         "label": "API",
-        "boundary": "LAN"
+        "cluster": "LAN"
       }
     },
     "datastores": {
       "mySQL": {
         "label": "mySQL",
-        "boundary": "LAN"
+        "cluster": "LAN"
       }
     },
-    "nestedboundaries": {
-      "Internet": "LAN"       
-    },
-    "edges": {
+     "edges": {
       "edge1": {
         "from": "Browser",
         "to": "Webserver",
+        "label": "Login intent",
         "stride": {
           "_comment": "st1 = Spoofing Threat for From, st2 = Spoofing Threat for dataflow, st3 = Spoofing Threat for To, sm1 = Spoofing Mitigation for From, sm2 = Spoofing Mitigation for dataflow, sm3 = Spoofing Mitigation for To",
+          "crossingboundary": "Internet",
           "st1": "Basic Auth - No bruteforce protection",
           "st2": "",
           "st3": "",
@@ -86,6 +84,7 @@
         "to": "API",
         "stride": {
           "_comment": "st1 = Spoofing Threat for From, st2 = Spoofing Threat for dataflow, st3 = Spoofing Threat for To, sm1 = Spoofing Mitigation for From, sm2 = Spoofing Mitigation for dataflow, sm3 = Spoofing Mitigation for To",
+          "crossingboundary": "LAN",
           "st1": "",
           "st2": "",
           "st3": "",

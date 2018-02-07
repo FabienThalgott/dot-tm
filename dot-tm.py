@@ -22,7 +22,7 @@ edges = nodes.get('edges')
 stridetable = defaultdict(dict)
 
 #declare boundaries dict
-boundaries = defaultdict(list)
+clusters = defaultdict(list)
 
 #Generate all processes nodes
 for key,value in processes.items():
@@ -31,8 +31,8 @@ for key,value in processes.items():
         if k in "label":
             node =  pydot.Node(v)
             graph.add_node(node)
-        if k in "boundary":
-            boundaries[v].append(item)
+        if k in "cluster":
+            clusters[v].append(item)
   
 #Generate all entities nodes
 for key,value in entities.items():
@@ -41,8 +41,8 @@ for key,value in entities.items():
         if k in "label":
             node =  pydot.Node(v, shape="box")
             graph.add_node(node)
-        if k in "boundary":
-            boundaries[v].append(item)
+        if k in "cluster":
+            clusters[v].append(item)
         
 
 #Generate all datastore nodes
@@ -52,8 +52,8 @@ for key,value in datastore.items():
         if k in "label":
             node =  pydot.Node(v, shape="cylinder")
             graph.add_node(node)
-        if k in "boundary":
-            boundaries[v].append(item)
+        if k in "cluster":
+            clusters[v].append(item)
         
 
 #Generate all edges and export stride analysis
@@ -66,12 +66,19 @@ for key,value in edges.items():
     infodict = {}
     dosdict={}
     elevationdict={}
+    isStride=False
+    crossingboundary = ''
+    label=''
     for k,v in value.items():
         if k in "from":
             edgefrom = v
         if k in "to":
             edgeto = v
+        if k in "label":
+            label = v
         if k in 'stride':
+            isStride = True
+            crossingboundary =  str({key:v[key] for key in ['crossingboundary']}['crossingboundary'])
             spoofingdict = {key:v[key] for key in ['st1', 'sm1', 'st2', 'sm2', 'st3', 'sm3']}
             tamperingdict = {key:v[key] for key in ['tt1', 'tm1', 'tt2', 'tm2','tt3', 'tm3']}
             repudiationdict = {key:v[key] for key in ['rt1', 'rm1', 'rt2', 'rm2','rt3', 'rm3']}
@@ -84,7 +91,10 @@ for key,value in edges.items():
             stridetable[edgefrom+';'+edgeto]['info']=['Information Disclosure',infodict['it1'],infodict['im1'],infodict['it2'],infodict['im2'],infodict['it3'],infodict['im3']]
             stridetable[edgefrom+';'+edgeto]['dos']=['Denial of Service',dosdict['dt1'],dosdict['dm1'],dosdict['dt2'],dosdict['dm2'],dosdict['dt3'],dosdict['dm3']]
             stridetable[edgefrom+';'+edgeto]['elevation']=['Elevation of privilege',elevationdict['et1'],elevationdict['em1'],elevationdict['et2'],elevationdict['em2'],elevationdict['et3'],elevationdict['em3']]
-    graph.add_edge(pydot.Edge(edgefrom, edgeto))
+    if (isStride):
+        graph.add_edge(pydot.Edge(edgefrom, edgeto, taillabel= '<<font color="red">'+crossingboundary+'</font>>', label=label, color='red'))
+    else:
+        graph.add_edge(pydot.Edge(edgefrom, edgeto))
    
 
 # Export STRIDE to csv table
@@ -103,12 +113,9 @@ with open('stride.csv', 'wb') as csvfile:
         writer.writerow('')
         
 
-
-
-# Generate boundaries
-clusters= defaultdict(list)
-for key,values in boundaries.iteritems():
-    cluster = pydot.Cluster(key,label=key, style='dashed', color='red',fontcolor='red')
+# Generate clusters
+for key,values in clusters.iteritems():
+    cluster = pydot.Cluster(key,label=key,labelloc='b')
     for item in values:
         cluster.add_node(pydot.Node(item,label=item))
     graph.add_subgraph(cluster)
