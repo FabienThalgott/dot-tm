@@ -1,0 +1,26 @@
+digraph G {
+Webserver;
+API;
+Browser [shape=box];
+mySQL [shape=cylinder];
+Browser -> Webserver  [color=red, taillabel=<<font color="red">Internet</font>>, label="Login intent"];
+Webserver -> API  [color=red, taillabel=<<font color="red">LAN</font>>, label=""];
+API -> mySQL;
+subgraph cluster_Internet {
+labelloc=b;
+color=grey;
+style=dashed;
+label=<<font color="grey">Internet</font>>;
+Webserver [label=Webserver];
+subgraph cluster_LAN {
+labelloc=b;
+color=grey;
+style=dashed;
+label=<<font color="grey">LAN</font>>;
+API [label=API];
+mySQL [label=mySQL];
+}
+
+}
+
+}
