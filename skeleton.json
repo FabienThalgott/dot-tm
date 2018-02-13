@@ -1,0 +1,30 @@
+{
+  "name": "Threat model template",
+  "description": "Description about this TM",
+  "author": "Fabien Thalgott",
+  "dependencies": {
+    "python": "2.7.0",
+    "pydot": "1.2.4",
+    "graphviz": "2.38"
+  },
+  "Doomsday": {
+    
+  },
+  "nodes": {
+    "entities": {
+      
+    },
+    "processes": {
+     
+    },
+    "datastores": {
+      
+    },
+    "nestedclusters": {
+     
+    },
+    "edges": {
+      
+    }
+  }
+}

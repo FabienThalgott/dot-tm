@@ -8,14 +8,24 @@
     "graphviz": "2.38"
   },
   "Doomsday": {
-    "Data Leak": "Database is dumped on pastebin",
-    "System compromise": "Someone inserted a tainted USB drive which installed a trojan",
-    "Ransomware": "Wannacry spread through the internal network"
+    "doom1": {
+      "label": "Database is dumped on pastebin",
+      "category": "Data Leak"
+    },
+    "doom2": {
+      "label": "Someone inserted a tainted USB drive which installed a trojan",
+      "category": "System compromise"
+    },
+    "doom3": {
+      "label": "Wannacry spread through the internal network",
+      "category": "Ransomware"
+    }   
   },
   "nodes": {
     "entities": {
       "Browser": {
-        "label": "Browser"
+        "label": "Browser",
+        "cluster": ""
       }
     },
     "processes": {

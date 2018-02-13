@@ -4,10 +4,23 @@ import json
 from collections import defaultdict
 import csv
 import sys
-import argparse as ap
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("json")
+filename='example.json'
+
+try:
+    args = parser.parse_args()
+    filename=args.json
+    data = json.load(open(args.json))
+except:
+    print 'No file given in command, defaulting to example.json'
+    data = json.load(open(filename))
+
 
 # Hardcoded json file to look for
-data = json.load(open('example.json'))
+#data = json.load(open('auth0.json'))
     
 
 ## Create a new graph and extraxt values from json
@@ -29,35 +42,31 @@ nclusters["root"] = graph
 #Generate all processes nodes
 for key,value in processes.items():
     item = key
-    for k,v in value.items():
-        if k in "label":
-            node = pydot.Node(v)
-            graph.add_node(node)
-        if k in "cluster":
-            clusters[v].append(item)
-  
+    itemlabel=''
+    lab = value['label']
+    node = pydot.Node(lab)
+    graph.add_node(node)
+    clus =  value['cluster']
+    clusters[clus].append(lab)
+      
 #Generate all entities nodes
 for key,value in entities.items():
     item = key
-    for k,v in value.items():
-        if k in "label":
-            node = pydot.Node(v, shape="box")
-            graph.add_node(node)
-        if k in "cluster":
-            clusters[v].append(item)
-        
-
+    lab = value['label']
+    node = pydot.Node(lab, shape="box")
+    graph.add_node(node)
+    clus =  value['cluster']
+    clusters[clus].append(lab)
+    
 #Generate all datastore nodes
 for key,value in datastore.items():
     item = key
-    for k,v in value.items():
-        if k in "label":
-            node = pydot.Node(v, shape="cylinder")
-            graph.add_node(node)
-        if k in "cluster":
-            clusters[v].append(item)
-        
-
+    lab = value['label']
+    node = pydot.Node(lab, shape="cylinder")
+    graph.add_node(node)
+    clus =  value['cluster']
+    clusters[clus].append(lab)
+ 
 #Generate all edges and export stride analysis
 for key,value in edges.items():
     edgefrom = value['from']
@@ -90,11 +99,11 @@ for key,value in edges.items():
     if (isStride):
         graph.add_edge(pydot.Edge(edgefrom, edgeto, taillabel= '<<font color="red">' + crossingboundary + '</font>>', label=label, color='red'))
     else:
-        graph.add_edge(pydot.Edge(edgefrom, edgeto))
+        graph.add_edge(pydot.Edge(edgefrom, edgeto, label=label))
    
 
 # Export STRIDE to csv table
-with open('stride.csv', 'wb') as csvfile:
+with open(filename+'stride.csv', 'wb') as csvfile:
     writer = csv.writer(csvfile, delimiter=';',quotechar='',escapechar='\\', quoting=csv.QUOTE_NONE)
     writer.writerow(['sep=','']) #Forces excel to bypass system delimiter and use the provided one instead
     for key, value in stridetable.iteritems():
@@ -132,9 +141,9 @@ for key,values in nestedclusters.iteritems():
             
        
 #Finally generate the graph
-graph.write_png('TM_graph.png')
-graph.write('TM_graph.dot')
-print "Graph has been generated as TM_graph.png"
-print "STRIDE has been exported to stride.csv"
+graph.write_png(filename+'.png')
+graph.write(filename+'.dot')
+print 'Graph has been generated as '+filename+'.png'
+print 'STRIDE has been exported to '+filename+'stride.csv'
 
 
