@@ -17,19 +17,12 @@ var clusterList = new Array();
 function newTM() {
     $.ajax({
         url: "skeleton.json",
-        //force to handle it as text
         dataType: "text",
         success: function (data) {
-
-            //data downloaded so we call parseJSON function 
-            //and pass downloaded data
             json = JSON.parse(data);
-            //now json variable contains data in json format
-            //let's display a few items
+            $("#TM").empty();
             $("#TM").append("<h1>" + json.name + "</h1>");
-
             reloadAll()
-
         }
     });
     
@@ -46,7 +39,8 @@ function uploadJson() {
             reloadAll()
         }
         reader.onerror = function (evt) {
-            document.getElementById("fileContents").innerHTML = "error reading file";
+            $("#TM").empty();
+            $("#TM").append("error reading file");
         }
     }
     console.log(result);
@@ -66,24 +60,16 @@ function reloadAll() {
 }
 
 
-function processJson() {
-           
-    //start ajax request
+function loadExample() {
+     
     $.ajax({
         url: "example.json",
-        //force to handle it as text
         dataType: "text",
         success: function (data) {
-
-            //data downloaded so we call parseJSON function 
-            //and pass downloaded data
             json = JSON.parse(data);
-            //now json variable contains data in json format
-            //let's display a few items
+            $("#TM").empty();
             $("#TM").append("<h1>"+json.name+"</h1>");
-
             reloadAll()
-           
         }
     });
 }
@@ -105,9 +91,6 @@ function deleteDoomsday(index) {
 }
 
 
-//function getJSON() {
-//    alert(JSON.stringify(json.Doomsday));
-//}
 function getJSON() {
     var exportName = 'TM'
     var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(json));
@@ -477,7 +460,6 @@ function addCluster() {
     var uuid = getID();
     var clu = $("#nestedCluster").val();
     var clusterarray = clu.split(',');
-    //var nestedClusterToAdd = { uuid: [clusterarray] };
     json.nodes.nestedclusters[uuid] = clusterarray;
     reloadClusters();
     $("#nestedCluster").val('');
@@ -485,9 +467,8 @@ function addCluster() {
 }
 
 
-
 function getID() {
-        
+        //should be unique enough
         return '_' + Math.random().toString(36).substr(2, 9);
   
 }

@@ -23,7 +23,7 @@ except:
 #data = json.load(open('auth0.json'))
     
 
-## Create a new graph and extraxt values from json
+## Create a new graph and extract values from json
 graph = pydot.Dot(graph_type='digraph')
 nodes = data.get('nodes')
 processes = nodes.get('processes')
