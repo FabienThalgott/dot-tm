@@ -21,7 +21,7 @@ The solution requires:
 		https://www.graphviz.org/download/
 
 ### Docker
-You can build you docker image using the supplied Dockerfile.
+You can build you docker image using the supplied Dockerfile. This is the easiest way to run the solution.
 
 `#Run this command from the location where the Dockerfile is situated`
 
@@ -29,7 +29,7 @@ You can build you docker image using the supplied Dockerfile.
 
 `# Expose port 8090 on localhost to access the web page`
 
-`docker run -dit --name dotrm my_dot-tm -p 8090:80`
+`docker run -dit -p 8090:80 --name dotrm my_dot-tm `
 
 Once done, open your web browser of choice and open http://localhost:8090/
 
