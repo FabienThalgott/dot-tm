@@ -110,7 +110,7 @@ function reloadAll() {
 function loadExample() {
      
     $.ajax({
-        url: "example.json",
+        url: "Example.json",
         dataType: "text",
         success: function (data) {
             json = JSON.parse(data);
