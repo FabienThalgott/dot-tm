@@ -102,3 +102,9 @@ ENV/
 /.vs
 /auth0 (2).json
 /auth0.json
+/auth0.json.dot
+/auth0.json.png
+/auth0.jsonstride.csv
+/example.json.dot
+/example.json.png
+/example.jsonstride.csv

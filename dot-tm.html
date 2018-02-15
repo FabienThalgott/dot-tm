@@ -1,6 +1,7 @@
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://pbx-group-security.com/js/graph/vis.js"></script>
 <script src="dot-tm.js">
     
 </script>
@@ -15,6 +16,8 @@
 
     <br />
 <input id="btnGetJson" value="Get JSON" type="button" onclick="getJSON()" />
+<input id="btnGetGraph" value="Generate Graph" type="button" onclick="loadGraph()" />
+<label><input id="switchGraph" type="checkbox" onchange="switchGraph()" />Interactive graph (Experimental)</label>
 <div id="content">
 
 </div>
@@ -24,6 +27,12 @@
 <div id="TM">
 
 </div>
+
+<div style="width:50%" id="graph" ></div>
+<div style="width:50%" hidden id="interactivegraph"></div>
+        
+    
+
 
 <div>
     <h2>Doomsdays </h2>

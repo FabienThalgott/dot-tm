@@ -15,6 +15,7 @@ var datastoreforCluster = new Array();
 var clusterList = new Array();
 
 function newTM() {
+    $("#graph").empty();
     $.ajax({
         url: "skeleton.json",
         dataType: "text",
@@ -28,8 +29,54 @@ function newTM() {
     
 }
 
+function loadGraph() {
+  
+    fileID = guid();
+    $("#graph").empty();
+
+    $.ajax({
+        type: "POST",
+        url: "generateGraph.php?file="+fileID,
+        contentType: "application/json",
+        data: JSON.stringify(json),
+        success: function (dataString) {
+            var container = document.getElementById('interactivegraph');
+            var data = vis.network.convertDot(dataString);
+            var network = new vis.Network(container, data);
+            $("#graph").append('<img src="' + fileID + '.png"><img>');
+        }
+    });
+
+
+}
+
+function switchGraph() {
+    if ($("#switchGraph").is(":checked")) {
+        $("#graph").hide();
+        $("#interactivegraph").show();
+    }
+    else {
+        $("#interactivegraph").hide();
+        $("#graph").show();
+    }
+}
+
+function guid() {
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+        s4() + '-' + s4() + s4() + s4();
+}
+
+function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+}
+
+
+
 
 function uploadJson() {
+    $("#graph").empty();
     var file = document.getElementById("btnUpload").files[0];
     if (file) {
         var reader = new FileReader();
@@ -271,7 +318,7 @@ function checkEdge(label) {
 
 function addEdge() {
   
-    if ($("#edgeID").val()=='')
+    if (!$("#edgeID").val())
         var uuid = getID();
     else
         var uuid = $("#edgeID").val()

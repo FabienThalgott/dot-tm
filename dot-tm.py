@@ -97,7 +97,7 @@ for key,value in edges.items():
             stridetable[edgefrom + ';' + edgeto]['dos'] = ['Denial of Service',dosdict['dt1'],dosdict['dm1'],dosdict['dt2'],dosdict['dm2'],dosdict['dt3'],dosdict['dm3']]
             stridetable[edgefrom + ';' + edgeto]['elevation'] = ['Elevation of privilege',elevationdict['et1'],elevationdict['em1'],elevationdict['et2'],elevationdict['em2'],elevationdict['et3'],elevationdict['em3']]
     if (isStride):
-        graph.add_edge(pydot.Edge(edgefrom, edgeto, taillabel= '<<font color="red">' + crossingboundary + '</font>>', label=label, color='red'))
+        graph.add_edge(pydot.Edge(edgefrom, edgeto, label=label + ' | ' +crossingboundary, color='red'))
     else:
         graph.add_edge(pydot.Edge(edgefrom, edgeto, label=label))
    
@@ -120,7 +120,7 @@ with open(filename+'stride.csv', 'wb') as csvfile:
 
 # Generate clusters
 for key,values in clusters.iteritems():
-    cluster = pydot.Cluster(key,label='<<font color="grey">' + key + '</font>>',labelloc='b', style='dashed',color='grey')
+    cluster = pydot.Cluster(key,label= key,labelloc='b', style='dashed',color='grey', labelfontcolor ='grey')
     for item in values:
         cluster.add_node(pydot.Node(item,label=item))
     nclusters[key] = cluster
@@ -133,7 +133,7 @@ for key,values in nestedclusters.iteritems():
         out = values[values.index(item) - 1] #Name of encapsulating cluster
         if 'root' not in item:
             if out not in nclusters: #If the cluster does no exist (for encapsulating stuff
-                clusterout = pydot.Cluster(out,label='<<font color="grey">' + out + '</font>>',labelloc='b', style='dashed',color='grey')
+                clusterout = pydot.Cluster(out,label= out ,labelloc='b', style='dashed',color='grey', labelfontcolor ='grey')
             else:
                 clusterout = nclusters[out] #encapsulating cluster
             clusterout.add_subgraph(clusterin) 
