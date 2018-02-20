@@ -329,10 +329,11 @@ function checkEdge(label) {
 
 function addEdge() {
   
-    if (!$("#edgeID").val())
-        var uuid = getID();
-    else
+    if ($("#edgeID").val())
         var uuid = $("#edgeID").val()
+    else
+        var uuid = getID();
+        
 
     var fromE = $("#edgeFrom").val();
     var ToE = $("#edgeTo").val();
@@ -397,6 +398,7 @@ function addEdge() {
     $("#isTrustBoundary").prop('checked', false);
     $("#strideTable").hide();
     $("#edgeLabel").val('');
+    $("#edgeID").val('')
 
     //cleanup stride table
     $("#st1").val('');
