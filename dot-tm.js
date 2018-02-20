@@ -36,14 +36,25 @@ function loadGraph() {
 
     $.ajax({
         type: "POST",
-        url: "generateGraph.php?file="+fileID,
+        url: "generateGraph.php?style=static&file="+fileID,
+        contentType: "application/json",
+        data: JSON.stringify(json),
+        success: function (data) {
+            $("#graph").append('<img src="data:image/png;base64,' + data + '" />');
+
+           
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "generateGraph.php?style=interactive&file=" + fileID,
         contentType: "application/json",
         data: JSON.stringify(json),
         success: function (dataString) {
             var container = document.getElementById('interactivegraph');
             var data = vis.network.convertDot(dataString);
             var network = new vis.Network(container, data);
-            $("#graph").append('<img src="' + fileID + '.png"><img>');
         }
     });
 

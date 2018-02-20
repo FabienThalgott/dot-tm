@@ -108,3 +108,6 @@ ENV/
 /example.json.dot
 /example.json.png
 /example.jsonstride.csv
+/graphs/auth0.jsonstride.csv
+/graphs/auth0.json.png
+/graphs/auth0.json.dot

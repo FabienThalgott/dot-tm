@@ -141,9 +141,10 @@ for key,values in nestedclusters.iteritems():
             
        
 #Finally generate the graph
-graph.write_png(filename+'.png')
+graph.write_png(filename+'.png') 
 graph.write(filename+'.dot')
+
 print 'Graph has been generated as '+filename+'.png'
-print 'STRIDE has been exported to '+filename+'stride.csv'
+print 'STRIDE has been exported to graphs/'+filename+'stride.csv'
 
 
