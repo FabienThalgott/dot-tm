@@ -29,7 +29,7 @@ You can build you docker image using the supplied Dockerfile. This is the easies
 
 `# Expose port 8090 on localhost to access the web page`
 
-`docker run -dit -p 8090:80 --name dotrm my_dot-tm `
+`docker run -d -p 8090:80 --name dotrm my_dot-tm `
 
 Once done, open your web browser of choice and open http://localhost:8090/
 
