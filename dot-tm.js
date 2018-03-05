@@ -345,7 +345,7 @@ function addEdge() {
             'to': ToE,
             "stride": {
                 "_comment": "",
-                "crossingboundary": "",
+                "crossingboundary": $("#crossingboundary").val(),
                 "st1": $("#st1").val(),
                 "st2": $("#st2").val(),
                 "st3": $("#st3").val(),
@@ -396,11 +396,12 @@ function addEdge() {
     json.nodes.edges[uuid] = edgeToAdd;
     reloadEdges();
     $("#isTrustBoundary").prop('checked', false);
-    $("#strideTable").hide();
+    displayStride();
     $("#edgeLabel").val('');
     $("#edgeID").val('')
 
     //cleanup stride table
+    $("#crossingboundary").val('');
     $("#st1").val('');
     $("#sm1").val('');
     $("#st2").val('');
@@ -457,9 +458,11 @@ function editEdge(index) {
     $("#edgeTo").val(json.nodes.edges[index].to);
     $("#edgeLabel").val(json.nodes.edges[index].label);
     $("#edgeID").val(index);
-    if (json.nodes.edges[index].stride){
+    if (json.nodes.edges[index].stride) {
         $("#isTrustBoundary").prop('checked', true);
-        $("#strideTable").show();
+        //$("#strideTable").show();
+        displayStride();
+        $("#crossingboundary").val(json.nodes.edges[index].stride.crossingboundary);
         $("#st1").val(json.nodes.edges[index].stride.st1);
         $("#sm1").val(json.nodes.edges[index].stride.sm1);
         $("#st2").val(json.nodes.edges[index].stride.st2);
@@ -502,13 +505,21 @@ function editEdge(index) {
         $("#et3").val(json.nodes.edges[index].stride.et3);
         $("#em3").val(json.nodes.edges[index].stride.em3);
     }
+    else {
+        $("#isTrustBoundary").prop('checked', false);
+        displayStride();
+    }
 }
 
 function displayStride() {
-    if ($("#isTrustBoundary").is(":checked"))
+    if ($("#isTrustBoundary").is(":checked")) {
         $("#strideTable").show();
-    else
+        $("#tmlabel").show();
+    }
+    else {
         $("#strideTable").hide();
+        $("#tmlabel").hide();
+    }
 }
 
 function deleteCluster(index) {
