@@ -2,185 +2,328 @@
 <html lang="en">
 <head>
     <title>Dot-tm</title>
-     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="dot-tm.js">
-    
-</script>
-    
+    <script src="dot-tm.js"></script>
 </head>
 
 <body onload="newTM()">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://pbx-group-security.com/js/graph/vis.js"></script>
 
-    <input id="btnNew" value="New TM" type="button" onclick="newTM()" /> <input id="btnExample" value="Load Example" type="button" onclick="loadExample()" />
+    <header>
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="#">Dot-TM</a>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <input class="btn btn-link" id="btnNew" value="New TM" type="button" onclick="newTM()" />
+                        <input class="btn btn-link" id="btnExample" value="Load Example" type="button" onclick="loadExample()" />
+                        <input id="btnUpload" class="btn btn-outline-secondary" value="Upload Json" type="file" onchange="uploadJson()" />
+                        <input class="btn btn-link" id="btnGetJson" value="Get JSON" type="button" onclick="getJSON()" />
+                        <input class="btn btn-link" id="btnGetGraph" value="Generate Graph" type="button" onclick="loadGraph()" />
+                        <div class="form-check">
+                            <input class="form-check-input" id="switchGraph" type="checkbox" onchange="switchGraph()">
+                            <label class="form-check-label text-light">
+                                Interactive graph (Experimental)
+                            </label>
+                        </div>
+                        <!--<label class="form-control"><input  id="switchGraph" type="checkbox" onchange="switchGraph()" />Interactive graph (Experimental)</label> -->
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main" class="container">
+
+        <br />
+        <br />
+
+        <div id="content">
+        </div>
+
+        <div id="fileContents"></div>
+
+        <div id="TM" class="mt-5">
+        </div>
+
+        <div style="width: 50%" id="graph"></div>
+        <div style="width: 50%" hidden id="interactivegraph"></div>
+
+
+
+
+        <div>
+            <h2 class="mt-5">Doomsdays </h2>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Category</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="doomCategory">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Description</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="doomLabel">
+                </div>
+            </div>
+            <div class="form-group row">
+                <input class="btn btn-primary mb-2" id="btndoomsday" type="button" value="Add Doomsday" onclick="addDoomsday()" />
+            </div>
+            <div class="form-group row">
+                <div id="Doomsdays">
+                </div>
+            </div>
+        </div>
+        <div>
+            <br />
+            <h2 class="mt-5">List of Entities</h2>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Label</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="entityLabel">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Cluster</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="entityCluster">
+                </div>
+            </div>
+            <div class="form-group row">
+                <input class="btn btn-primary mb-2" id="btnentity" type="button" value="Add Entity" onclick="addEntity()" />
+            </div>
+            <div class="form-group row">
+                <div id="Entities">
+                </div>
+            </div>
+        </div>
+        <div>
+            <br />
+            <h2 class="mt-5">List of Processes</h2>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Label</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="processLabel">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Cluster</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="processCluster">
+                </div>
+            </div>
+            <div class="form-group row">
+                <input class="btn btn-primary mb-2" id="btnprocess" type="button" value="Add Process" onclick="addProcess()" />
+            </div>
+            <div class="form-group row">
+                <div id="Processes">
+                </div>
+            </div>
+        </div>
+        <div>
+            <br />
+            <h2 class="mt-5">List of Datastores</h2>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Label</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="datastoreLabel">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Cluster</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="datastoreCluster">
+                </div>
+            </div>
+            <div class="form-group row">
+                <input class="btn btn-primary mb-2" id="btndatastore" type="button" value="Add Datastore" onclick="addDatastore()" />
+            </div>
+            <div class="form-group row">
+                <div id="Datastores">
+                </div>
+            </div>
+        </div>
+
+
+        <div>
+            <br />
+            <h2 class="mt-5">Nested Clusters</h2>
+            <div class="form-row align-items-center">
+                <div class="col-auto">
+                    Declared clusters :
+                </div>
+                <div class="col-auto">
+                    <div id="clusterList">
+                    </div>
+                </div>
+            </div>
+
+            <br />
+            Clusters group object with each other. They can also be nested. Use the clusters from the declared list. Each cluster needs to be coma separated. Respect the following order : left cluster is the most outside, right cluster is the most nested
     <br />
-<input id="btnUpload"  value="Upload Json" type="file" onchange="uploadJson()" />
 
-    <br />
-<input id="btnGetJson" value="Get JSON" type="button" onclick="getJSON()" />
-<input id="btnGetGraph" value="Generate Graph" type="button" onclick="loadGraph()" />
-<label><input id="switchGraph" type="checkbox" onchange="switchGraph()" />Interactive graph (Experimental)</label>
-<div id="content">
+            <div class="form-row align-items-center">
+                <div class="col-auto">
+                    NestedCluster :
+                </div>
+                <div class="col-auto">
+                    <input type="text" class="form-control mb-2" id="nestedCluster">
+                </div>
+                <div class="col-auto">
+                    <input class="btn btn-primary mb-2" id="btncluster" type="button" value="Add cluster" onclick="addCluster()" />
+                </div>
 
-</div>
+            </div>
 
-    <div id="fileContents"></div>
+            <div id="Clusters">
+            </div>
+        </div>
 
-<div id="TM">
+        <div>
 
-</div>
-
-<div style="width:50%" id="graph" ></div>
-<div style="width:50%" hidden id="interactivegraph"></div>
-        
-    
-
-
-<div>
-    <h2>Doomsdays </h2>
-    Category : <input id="doomCategory" type="text" /><br />
-    Description : <input id="doomLabel" type="text" /><br />
-    <input id="btndoomsday" type="button" value="Add Doomsday" onclick="addDoomsday()" />
-    <div id="Doomsdays">
-    </div>
-
-</div>
-
-<div>
-    <br /> <h2>List of Entities</h2>
-     Label : <input id="entityLabel" type="text" /><br />
-    Cluster : <input id="entityCluster" type="text" /><br />
-    <input id="btnentity" type="button" value="Add Entity" onclick="addEntity()" />
-    <div id="Entities">
-    </div>
-</div>
-
-
-<div>
-    <br /><h2>List of Processes</h2>
-    Label : <input id="processLabel" type="text" /><br />
-    Cluster : <input id="processCluster" type="text" /><br />
-    <input id="btnprocess" type="button" value="Add Process" onclick="addProcess()" />
-    <div id="Processes">
-</div>
-</div>
-
-<div>
-     <br /><h2>List of Datastores</h2>
-     Label : <input id="datastoreLabel" type="text" /><br />
-    Cluster : <input id="datastoreCluster" type="text" /><br />
-    <input id="btndatastore" type="button" value="Add Datastore" onclick="addDatastore()" />
-    <div id="Datastores">
-</div>
-</div>
-
-<div>
-     <br /><h2>Nested Clusters</h2>
-    Declared clusters : <div id="clusterList"></div>
-    <br />
-    Clusters group object with each other. They can also be nested. Use the clusters from the declared list. Each cluster needs to be coma separated. Respect the following order : left cluster is the most outside, right cluster is the most nested
-    <br />
-    NestedCluster : <input id="nestedCluster" type="text" />
-    <input id="btndatastore" type="button" value="Add cluster" onclick="addCluster()" />
-    <div id="Clusters">
-</div>
-</div>
-
-<div>
-
-    <br /> <h2>List of Edges</h2>
-    <input id="edgeID" hidden type="text" />
-    From :
+            <br />
+            <h2 class="mt-5">List of Edges</h2>
+            <div class="form-row align-items-center">
+                <div class="col-auto">
+                    <input id="edgeID" hidden type="text" />
+                    From :
     <select id="edgeFrom">
-     </select>
-
-    To: 
+    </select>
+                </div>
+                <div class="col-auto">
+                    To: 
     <select id="edgeTo">
     </select>
-    Label : <input id="edgeLabel" type="text" /> isTrustBoundary? : <input id="isTrustBoundary" type="checkbox" onchange="displayStride()" /><div id="tmlabel" hidden>Trust boundary label :<input id="crossingboundary" type="text"/></div>
-    <table id="strideTable" hidden style="width:100%;">
-        <tr>
-            <td></td>
-            <td>From Threat</td>
-            <td>From Mitigation</td>
-            <td>Dataflow Threat</td>
-            <td>Dataflow Mitigation</td>
-            <td>To Threat</td>
-            <td>To Mitigation</td>
-
-        </tr>
-        <tr>
-            <td>Spoofing</td>
-            <td><input id="st1" type="text" /></td>
-            <td><input id="sm1" type="text" /></td>
-            <td><input id="st2" type="text" /></td>
-            <td><input id="sm2" type="text" /></td>
-            <td><input id="st3" type="text" /></td>
-            <td><input id="sm3" type="text" /></td>
-            
-        </tr>
-        <tr>
-            <td>Tampering</td>
-            <td><input id="tt1" type="text" /></td>
-            <td><input id="tm1" type="text" /></td>
-            <td><input id="tt2" type="text" /></td>
-            <td><input id="tm2" type="text" /></td>
-            <td><input id="tt3" type="text" /></td>
-            <td><input id="tm3" type="text" /></td>
-        </tr>
-        <tr>
-            <td>Repudiation</td>
-            <td><input id="rt1" type="text" /></td>
-            <td><input id="rm1" type="text" /></td>
-            <td><input id="rt2" type="text" /></td>
-            <td><input id="rm2" type="text" /></td>
-            <td><input id="rt3" type="text" /></td>
-            <td><input id="rm3" type="text" /></td>
-        </tr>
-        <tr>
-            <td>Information Disclosure</td>
-            <td><input id="it1" type="text" /></td>
-            <td><input id="im1" type="text" /></td>
-            <td><input id="it2" type="text" /></td>
-            <td><input id="im2" type="text" /></td>
-            <td><input id="it3" type="text" /></td>
-            <td><input id="im3" type="text" /></td>
-        </tr>
-        <tr>
-            <td>Denial of Service</td>
-            <td><input id="dt1" type="text" /></td>
-            <td><input id="dm1" type="text" /></td>
-            <td><input id="dt2" type="text" /></td>
-            <td><input id="dm2" type="text" /></td>
-            <td><input id="dt3" type="text" /></td>
-            <td><input id="dm3" type="text" /></td>
-        </tr>
-         <tr>
-            <td>Elevation of Privilege</td>
-            <td><input id="et1" type="text" /></td>
-            <td><input id="em1" type="text" /></td>
-            <td><input id="et2" type="text" /></td>
-            <td><input id="em2" type="text" /></td>
-            <td><input id="et3" type="text" /></td>
-            <td><input id="em3" type="text" /></td>
-        </tr>
-    </table>
-    <br />
-     <input id="btnedge" type="button" value="Add Edge" onclick="addEdge()" />
-    <div id="Edges">
-</div>
-    </div>
+                </div>
+                <div class="col-auto">
+                    Label :
+                    <input id="edgeLabel" type="text" />
+                </div>
+                <div class="col-auto">
+                    isTrustBoundary? :
+                    <input id="isTrustBoundary" type="checkbox" value="false" onchange="displayStride()" />
+                </div>
+            </div>
+            <div id="tmlabel">Trust boundary label :<input id="crossingboundary" type="text" /></div>
 
 
+            <table id="strideTable" class="table table-striped">
+                <tr>
+                    <td></td>
+                    <td>From Threat</td>
+                    <td>From Mitigation</td>
+                    <td>Dataflow Threat</td>
+                    <td>Dataflow Mitigation</td>
+                    <td>To Threat</td>
+                    <td>To Mitigation</td>
 
+                </tr>
+                <tr>
+                    <td>Spoofing</td>
+                    <td>
+                        <input id="st1" type="text" /></td>
+                    <td>
+                        <input id="sm1" type="text" /></td>
+                    <td>
+                        <input id="st2" type="text" /></td>
+                    <td>
+                        <input id="sm2" type="text" /></td>
+                    <td>
+                        <input id="st3" type="text" /></td>
+                    <td>
+                        <input id="sm3" type="text" /></td>
+
+                </tr>
+                <tr>
+                    <td>Tampering</td>
+                    <td>
+                        <input id="tt1" type="text" /></td>
+                    <td>
+                        <input id="tm1" type="text" /></td>
+                    <td>
+                        <input id="tt2" type="text" /></td>
+                    <td>
+                        <input id="tm2" type="text" /></td>
+                    <td>
+                        <input id="tt3" type="text" /></td>
+                    <td>
+                        <input id="tm3" type="text" /></td>
+                </tr>
+                <tr>
+                    <td>Repudiation</td>
+                    <td>
+                        <input id="rt1" type="text" /></td>
+                    <td>
+                        <input id="rm1" type="text" /></td>
+                    <td>
+                        <input id="rt2" type="text" /></td>
+                    <td>
+                        <input id="rm2" type="text" /></td>
+                    <td>
+                        <input id="rt3" type="text" /></td>
+                    <td>
+                        <input id="rm3" type="text" /></td>
+                </tr>
+                <tr>
+                    <td>Information Disclosure</td>
+                    <td>
+                        <input id="it1" type="text" /></td>
+                    <td>
+                        <input id="im1" type="text" /></td>
+                    <td>
+                        <input id="it2" type="text" /></td>
+                    <td>
+                        <input id="im2" type="text" /></td>
+                    <td>
+                        <input id="it3" type="text" /></td>
+                    <td>
+                        <input id="im3" type="text" /></td>
+                </tr>
+                <tr>
+                    <td>Denial of Service</td>
+                    <td>
+                        <input id="dt1" type="text" /></td>
+                    <td>
+                        <input id="dm1" type="text" /></td>
+                    <td>
+                        <input id="dt2" type="text" /></td>
+                    <td>
+                        <input id="dm2" type="text" /></td>
+                    <td>
+                        <input id="dt3" type="text" /></td>
+                    <td>
+                        <input id="dm3" type="text" /></td>
+                </tr>
+                <tr>
+                    <td>Elevation of Privilege</td>
+                    <td>
+                        <input id="et1" type="text" /></td>
+                    <td>
+                        <input id="em1" type="text" /></td>
+                    <td>
+                        <input id="et2" type="text" /></td>
+                    <td>
+                        <input id="em2" type="text" /></td>
+                    <td>
+                        <input id="et3" type="text" /></td>
+                    <td>
+                        <input id="em3" type="text" /></td>
+                </tr>
+            </table>
+            <br />
+            <input class="btn btn-primary mb-2" id="btnedge" type="button" value="Add Edge" onclick="addEdge()" />
+            <div id="Edges">
+            </div>
+        </div>
+
+
+    </main>
 
 </body>
 
