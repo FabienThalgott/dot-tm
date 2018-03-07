@@ -43,8 +43,8 @@ nclusters["root"] = graph
 for key,value in processes.items():
     item = key
     itemlabel=''
-    lab = value['label', shape="circle"]
-    node = pydot.Node(lab)
+    lab = value['label']
+    node = pydot.Node(lab, shape="circle")
     graph.add_node(node)
     clus =  value['cluster']
     clusters[clus].append(lab)
@@ -103,7 +103,7 @@ for key,value in edges.items():
    
 
 # Export STRIDE to csv table
-with open(filename+'stride.csv', 'wb') as csvfile:
+with open(filename+'.csv', 'wb') as csvfile:
     writer = csv.writer(csvfile, delimiter=';',quotechar='',escapechar='\\', quoting=csv.QUOTE_NONE)
     writer.writerow(['sep=','']) #Forces excel to bypass system delimiter and use the provided one instead
     for key, value in stridetable.iteritems():
@@ -145,6 +145,6 @@ graph.write_png(filename+'.png')
 graph.write(filename+'.dot')
 
 print 'Graph has been generated as '+filename+'.png'
-print 'STRIDE has been exported to graphs/'+filename+'stride.csv'
+print 'STRIDE has been exported to graphs/'+filename+'.csv'
 
 

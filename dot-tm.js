@@ -165,6 +165,19 @@ function getJSON() {
     downloadAnchorNode.remove();
 }
 
+function getAll() {
+    fileID = guid();
+    
+    $.ajax({
+        type: "POST",
+        url: "generateGraph.php?style=zip&file=" + fileID,
+        contentType: "application/json",
+        data: JSON.stringify(json),
+        success: function (data) {
+            window.location.href = 'graphs/'+fileID+'.zip';
+        }
+    });
+}
 
 function reloadDoomsday() {
     doom = '';
@@ -550,12 +563,3 @@ function getID() {
 
 }
 
-//For resizing text area
-jQuery.each(jQuery('textarea[data-autoresize]'), function () {
-    var offset = this.offsetHeight - this.clientHeight;
-
-    var resizeTextarea = function (el) {
-        jQuery(el).css('height', 'auto').css('height', el.scrollHeight + offset);
-    };
-    jQuery(this).on('keyup input', function () { resizeTextarea(this); }).removeAttr('data-autoresize');
-});

@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
     git \
 	libapache2-mod-php7.0 \
     php7.0 \
+	php7.0-zip \
     python \
     python-pip \
 	graphviz \
@@ -21,7 +22,7 @@ RUN echo '/usr/sbin/apache2ctl start' >> run.sh
 RUN echo 'while [ true ]' >> run.sh
 RUN echo 'do' >> run.sh
 RUN echo '  rm /var/www/html/graphs/*' >> run.sh
-RUN echo '  sleep 60' >> run.sh
+RUN echo '  sleep 500' >> run.sh
 RUN echo 'done' >> run.sh
 
 RUN chmod +x run.sh 

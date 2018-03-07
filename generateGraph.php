@@ -15,6 +15,21 @@ if(preg_match('/^[a-z0-9-]+$/', $filename)) {
     if($_GET['style']=='interactive'){
             echo file_get_contents('graphs/'.$filename.'.dot');
     }
+ 
+	if($_GET['style']=='zip'){
+		$file = 'graphs/'.$filename.'.zip';
+        $zip = new ZipArchive;
+        if ($zip->open($file, ZipArchive::CREATE) === TRUE)
+        {
+        $zip->addFile('graphs/'.$filename.'.png','tm.png');
+        $zip->addFile('graphs/'.$filename.'.dot','tm.dot');
+        $zip->addFile('graphs/'.$filename,'tm.json');
+        $zip->addFile('graphs/'.$filename.'.csv','tm.csv');
+		$zip->close();
+        }
+    
+}
+
 } else {
 echo "Nah, that won't work";
 }
