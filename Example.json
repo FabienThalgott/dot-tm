@@ -19,7 +19,7 @@
     "doom3": {
       "label": "Wannacry spread through the internal network",
       "category": "Ransomware"
-    }   
+    }
   },
   "nodes": {
     "entities": {
@@ -31,7 +31,7 @@
     "processes": {
       "Webserver": {
         "label": "Webserver",
-        "cluster": "Internet"
+        "cluster": "DMZ"
       },
       "API": {
         "label": "API",
@@ -45,7 +45,11 @@
       }
     },
     "nestedclusters": {
-      "cluster1": [ "root", "Internet", "LAN" ]
+      "cluster1": [
+        "root",
+        "DMZ",
+        "LAN"
+      ]
     },
     "edges": {
       "edge1": {
@@ -139,9 +143,9 @@
         }
       },
       "edge3": {
+        "label": "",
         "from": "API",
-        "to": "mySQL",
-        "label": "Login intent"
+        "to": "mySQL"
       }
     }
   }
