@@ -43,7 +43,7 @@ nclusters["root"] = graph
 for key,value in processes.items():
     item = key
     itemlabel=''
-    lab = value['label']
+    lab = value['label', shape="circle"]
     node = pydot.Node(lab)
     graph.add_node(node)
     clus =  value['cluster']
@@ -62,7 +62,7 @@ for key,value in entities.items():
 for key,value in datastore.items():
     item = key
     lab = value['label']
-    node = pydot.Node(lab, shape="cylinder")
+    node = pydot.Node(lab, shape="trapezium")
     graph.add_node(node)
     clus =  value['cluster']
     clusters[clus].append(lab)
