@@ -7,6 +7,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="dot-tm.js"></script>
+   
 </head>
 
 <body onload="newTM()">
@@ -49,12 +50,16 @@
         </div>
 
         <div id="fileContents"></div>
-
+        
         <div id="TM" class="mt-5">
+            <h1></h1>
+        
         </div>
-
-        <div style="width: 50%" id="graph"></div>
-        <div style="width: 50%" hidden id="interactivegraph"></div>
+        
+       
+        <div class="img-fluid" id="graph"></div>
+        <div style="height: 600px" hidden id="interactivegraph"></div> 
+           
 
 
 
@@ -91,7 +96,7 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Cluster</label>
+                <label class="col-sm-2 col-form-label">Cluster (Optional)</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="entityCluster">
                 </div>
@@ -114,7 +119,7 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Cluster</label>
+                <label class="col-sm-2 col-form-label">Cluster (Optional)</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="processCluster">
                 </div>
@@ -137,7 +142,7 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Cluster</label>
+                <label class="col-sm-2 col-form-label">Cluster (Optional)</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="datastoreCluster">
                 </div>
@@ -154,7 +159,7 @@
 
         <div>
             <br />
-            <h2 class="mt-5">Nested Clusters</h2>
+            <h2 class="mt-5">Nested Clusters (Optional Section)</h2>
             <div class="form-row align-items-center">
                 <div class="col-auto">
                     Declared clusters :
@@ -166,7 +171,7 @@
             </div>
 
             <br />
-            Clusters group object with each other. They can also be nested. Use the clusters from the declared list. Each cluster needs to be coma separated. Respect the following order : left cluster is the most outside, right cluster is the most nested
+            Clusters group object with each other. They can also be nested. Use the clusters from the declared list. Each cluster needs to be coma separated and starts with root. Respect the following order : left cluster is the most outside, right cluster is the most nested
     <br />
 
             <div class="form-row align-items-center">
@@ -203,7 +208,7 @@
     </select>
                 </div>
                 <div class="col-auto">
-                    Label :
+                    Label (Optional) :
                     <input id="edgeLabel" type="text" />
                 </div>
                 <div class="col-auto">
@@ -211,7 +216,7 @@
                     <input id="isTrustBoundary" type="checkbox" value="false" onchange="displayStride()" />
                 </div>
             </div>
-            <div id="tmlabel">Trust boundary label :<input id="crossingboundary" type="text" /></div>
+            <div id="tmlabel">Trust boundary label (Optional) :<input id="crossingboundary" type="text" /></div>
 
 
             <table id="strideTable" class="table table-striped">

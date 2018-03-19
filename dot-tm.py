@@ -141,7 +141,7 @@ for key,values in nestedclusters.iteritems():
             
        
 #Finally generate the graph
-graph.write_png(filename+'.png') 
+graph.write_png(filename+'.png',prog='dot') 
 graph.write(filename+'.dot')
 
 print 'Graph has been generated as '+filename+'.png'

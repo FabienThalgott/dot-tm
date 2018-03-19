@@ -21,18 +21,62 @@ $("#btnNew").click(function () {
 
 function newTM() {
     $("#graph").empty();
+    $("h1").empty();
+    $("#TmRename").remove();
     $.ajax({
         url: "skeleton.json",
         dataType: "text",
         success: function (data) {
             json = JSON.parse(data);
-            $("#TM").empty();
-            $("#TM").append("<h1>" + json.name + "</h1>");
+            $("h1").append(json.name);
             reloadAll()
         }
     });
 
 }
+
+$(document).ready(function () {
+    $('h1').click(function () {
+        var name = $(this).text();
+        $('h1').empty();
+        $('<input></input>')
+            .attr({
+                'type': 'text',
+                'id': 'TmRename',
+                'value': name
+            })
+            .appendTo('#TM');
+        $('#TM').focus();
+    });
+
+    $(document).on('blur', '#TmRename', function () {
+        var name = $(this).val();
+        $("#TmRename").remove();
+        json.name = name;
+        $('h1').append(name);
+    });
+});
+
+
+function loadGraph_debug() {
+
+    fileID = guid();
+    $("#graph").empty();
+
+    
+    $("#graph").append('<img  class="img-fluid" src="TM_graph.png"></img>');
+
+    dotFile = 'digraph G {    Webserver[shape = circle];    API[shape = circle];    Browser[shape = box];    mySQL[shape = database];    Browser -> Webserver[color = red, label = "Login intent | Internet"];    Webserver -> API[color = red, label = " | LAN"];    API -> mySQL[label = ""];    subgraph cluster_DMZ {        labelloc = b;        color = grey;        style = dashed;        labelfontcolor = grey;        label = DMZ;        Webserver[label = Webserver];        subgraph cluster_LAN {            labelloc = b;            color = grey;            style = dashed;            labelfontcolor = grey;            label = LAN;            API[label = API];            mySQL[label = mySQL];        }    }}'
+   
+    $("#interactivegraph").show();
+            var container = document.getElementById('interactivegraph');
+            var data = vis.network.convertDot(dotFile);
+            var network = new vis.Network(container, data);
+    $("#interactivegraph").hide();
+
+
+}
+
 
 function loadGraph() {
 
@@ -113,6 +157,7 @@ function uploadJson() {
 
 function reloadAll() {
     clusterList = new Array();
+    clusterList.push('root');
     reloadDoomsday();
     reloadProcesses();
     reloadDatastores();
@@ -125,14 +170,14 @@ function reloadAll() {
 
 
 function loadExample() {
-
+    
     $.ajax({
         url: "Example.json",
         dataType: "text",
         success: function (data) {
+            $("h1").empty();
             json = JSON.parse(data);
-            $("#TM").empty();
-            $("#TM").append("<h1>" + json.name + "</h1>");
+            $("h1").append(json.name);
             reloadAll()
         }
     });
