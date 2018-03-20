@@ -239,7 +239,7 @@ function reloadProcesses() {
 
     $("#Processes").empty();
     for (index in json.nodes.processes) {
-        processes += '<fieldset class="form-group"><div class="row"><div class="col-auto pt-0"> <input class="btn btn-danger" type="button" value="Delete" onclick="deleteProcess(\'' + index + '\')" ></div><div class="col-auto pt-0">' + json.nodes.processes[index].label + '<br>Cluster : ' + json.nodes.processes[index].cluster + '<br></div></div></fieldset>';
+        processes += '<fieldset class="form-group"><div class="row"><div class="col-auto pt-0"><input class="btn btn-warning" type="button" value="Edit" onclick="editProcess(\'' + index + '\')" > <input class="btn btn-danger" type="button" value="Delete" onclick="deleteProcess(\'' + index + '\')" ></div><div class="col-auto pt-0">' + json.nodes.processes[index].label + '<br>Cluster : ' + json.nodes.processes[index].cluster + '<br></div></div></fieldset>';
         processforEdge.push(json.nodes.processes[index].label);
         if (clusterList.indexOf(json.nodes.processes[index].cluster) == -1)
             clusterList.push(json.nodes.processes[index].cluster);
@@ -256,7 +256,7 @@ function reloadEntities() {
     entitiesforEdge = new Array();
     $("#Entities").empty();
     for (index in json.nodes.entities) {
-        entities += '<fieldset class="form-group"><div class="row"><div class="col-auto pt-0"> <input class="btn btn-danger"  type="button" value="Delete" onclick="deleteEntity(\'' + index + '\')" ></div><div class="col-auto pt-0">' + json.nodes.entities[index].label + '<br> Cluster : ' + json.nodes.entities[index].cluster + '<br></div></div></fieldset>';
+        entities += '<fieldset class="form-group"><div class="row"><div class="col-auto pt-0"><input class="btn btn-warning" type="button" value="Edit" onclick="editEntity(\'' + index + '\')" > <input class="btn btn-danger"  type="button" value="Delete" onclick="deleteEntity(\'' + index + '\')" ></div><div class="col-auto pt-0">' + json.nodes.entities[index].label + '<br> Cluster : ' + json.nodes.entities[index].cluster + '<br></div></div></fieldset>';
         entitiesforEdge.push(json.nodes.entities[index].label)
         if (clusterList.indexOf(json.nodes.entities[index].cluster) == -1)
             clusterList.push(json.nodes.entities[index].cluster);
@@ -272,7 +272,7 @@ function reloadDatastores() {
     datastoreforEdge = new Array();
     $("#Datastores").empty();
     for (index in json.nodes.datastores) {
-        datastores += '<fieldset class="form-group"><div class="row"><div class="col-auto pt-0"> <input class="btn btn-danger" type="button" value="Delete" onclick="deleteDatastore(\'' + index + '\')" ></div><div class="col-auto pt-0">' + json.nodes.datastores[index].label + '<br> Cluster : ' + json.nodes.datastores[index].cluster + '<br></div></div></fieldset>';
+        datastores += '<fieldset class="form-group"><div class="row"><div class="col-auto pt-0"><input class="btn btn-warning" type="button" value="Edit" onclick="editDatastore(\'' + index + '\')" > <input class="btn btn-danger" type="button" value="Delete" onclick="deleteDatastore(\'' + index + '\')" ></div><div class="col-auto pt-0">' + json.nodes.datastores[index].label + '<br> Cluster : ' + json.nodes.datastores[index].cluster + '<br></div></div></fieldset>';
         datastoreforEdge.push(json.nodes.datastores[index].label)
         if (clusterList.indexOf(json.nodes.datastores[index].cluster) == -1)
             clusterList.push(json.nodes.datastores[index].cluster);
@@ -333,15 +333,60 @@ function reloadEdgeBoxes() {
 }
 
 function addProcess() {
-    var uuid = getID();
+    var edgCheck = false;
+    var oldLabel ='';
+    if ($("#processID").val()) {
+        var uuid = $("#processID").val();
+        oldLabel = json.nodes.processes[uuid].label;
+        edgCheck = true;
+    }
+    else
+        var uuid = getID();
+        
     var clu = $("#processCluster").val();
     var lab = $("#processLabel").val();
     var processToAdd = { 'label': lab, 'cluster': clu };
     json.nodes.processes[uuid] = processToAdd;
+
+    if (edgCheck) 
+        replaceEdge(oldLabel, lab);
+       
     reloadProcesses();
     $("#processCluster").val('');
     $("#processLabel").val('');
+    $("#processID").val('')
 }
+
+function replaceEdge(oldlabel, label){
+    for (index in json.nodes.edges) {
+        if (json.nodes.edges[index].from == oldlabel)
+            json.nodes.edges[index].from = label;
+        if (json.nodes.edges[index].to == oldlabel)
+            json.nodes.edges[index].to = label;
+    }
+    reloadEdges();
+
+}
+
+function editProcess(index) {
+    $("#processCluster").val(json.nodes.processes[index].cluster);
+    $("#processLabel").val(json.nodes.processes[index].label);
+    $("#processID").val(index);
+}
+
+function editEntity(index) {
+    $("#entityCluster").val(json.nodes.entities[index].cluster);
+    $("#entityLabel").val(json.nodes.entities[index].label);
+    $("#entityID").val(index);
+}
+
+function editDatastore(index) {
+    $("#datastoreCluster").val(json.nodes.datastores[index].cluster);
+    $("#datastoreLabel").val(json.nodes.datastores[index].label);
+    $("#datastoreID").val(index);
+}
+
+
 
 function deleteProcess(index) {
     checkEdge(json.nodes.processes[index].label);
@@ -350,14 +395,27 @@ function deleteProcess(index) {
 }
 
 function addDatastore() {
-    var uuid = getID();
+    var edgCheck = false;
+    var oldLabel = '';
+    if ($("#datastoreID").val()) {
+        var uuid = $("#datastoreID").val();
+        oldLabel = json.nodes.datastores[uuid].label;
+        edgCheck = true;
+    }
+    else
+        var uuid = getID();
+
     var clu = $("#datastoreCluster").val();
     var lab = $("#datastoreLabel").val();
     var datastoreToAdd = { 'label': lab, 'cluster': clu };
     json.nodes.datastores[uuid] = datastoreToAdd;
+    if (edgCheck)
+        replaceEdge(oldLabel, lab);
     reloadDatastores();
     $("#datastoreCluster").val('');
     $("#datastoreLabel").val('');
+    $("#datastoreID").val('')
+
 }
 
 function deleteDatastore(index) {
@@ -367,14 +425,26 @@ function deleteDatastore(index) {
 }
 
 function addEntity() {
-    var uuid = getID();
+    var edgCheck = false;
+    var oldLabel = '';
+    if ($("#entityID").val()) {
+        var uuid = $("#entityID").val();
+        oldLabel = json.nodes.entities[uuid].label;
+        edgCheck = true;
+    }
+    else
+        var uuid = getID();
+
     var clu = $("#entityCluster").val();
     var lab = $("#entityLabel").val();
     var entityToAdd = { 'label': lab, 'cluster': clu };
     json.nodes.entities[uuid] = entityToAdd;
+    if (edgCheck)
+        replaceEdge(oldLabel, lab);
     reloadEntities();
     $("#entityCluster").val('');
     $("#entityLabel").val('');
+    $("#entityID").val('')
 }
 
 function deleteEntity(index) {
