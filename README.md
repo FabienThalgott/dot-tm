@@ -27,12 +27,17 @@ The solution requires:
 	- graphviz 2.38 
 		https://www.graphviz.org/download/
 
-### Docker
+### Docker Hub
 
 You can get the latest build from docker hub : 
 ` docker pull fallenz/dot-tm `
 
+Then run the instance with `docker run -d -p 8090:80 --name dotm fallenz/dot-tm:latest `
 
+Once done, open your web browser of choice and open http://localhost:8090/
+
+
+### Docker Build Your Own
 Alternatively, You can build your own docker image using the supplied Dockerfile.
 
 `#Run this command from the location where the Dockerfile is situated`
@@ -41,7 +46,7 @@ Alternatively, You can build your own docker image using the supplied Dockerfile
 
 `# Expose port 8090 on localhost to access the web page`
 
-`docker run -d -p 8090:80 --name dotrm my_dot-tm `
+`docker run -d -p 8090:80 --name dotm my_dot-tm `
 
 Once done, open your web browser of choice and open http://localhost:8090/
 
