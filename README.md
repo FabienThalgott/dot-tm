@@ -9,7 +9,8 @@ A tool using a json input to generate a DOT graph and STRIDE CSV file
 To use this, just git clone the project to your machine. 
 Take example.json as a template. Entities, processes, datastore and edges need to be created in their respective nodes as in the example.
 Once ready, simply run dot-tm.py
-Check the documentation for more details : https://github.com/FabienThalgott/dot-tm/blob/master/HowTo.pdf
+Check the documentation for more details : [HowTo.pdf](HowTo.pdf)
+
 
 ### Demo server
 
