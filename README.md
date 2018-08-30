@@ -12,9 +12,6 @@ Once ready, simply run dot-tm.py
 Check the documentation for more details : [HowTo.pdf](HowTo.pdf)
 
 
-### Demo server
-
-A server running the latest build is available at : http://dot-tm.z1t.pw
 
 ### Prerequisites
 
